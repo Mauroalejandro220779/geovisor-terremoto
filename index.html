@@ -230,7 +230,7 @@
 
 <header class="top">
   <h1>Dónde Donar — Terremoto Colombia 7,4</h1>
-  <span class="sub">18 puntos · datos consolidados manualmente al 12·08·2026</span>
+  <span class="sub">21 puntos · datos consolidados manualmente al 12·08·2026</span>
 </header>
 
 <div class="layout">
@@ -275,6 +275,8 @@ const POINTS = [
   {name:"Punto Usaquén", dept:"Bogotá D.C.", addr:"Cl 161A #7F-55, Bogotá", lat:4.7420, lng:-74.0300, cats:["agua_alimentos","abrigo","aseo"], source:"Alcaldía de Bogotá", sourceUrl:"https://www.infobae.com/colombia/2026/08/11/estadio-el-campin-sera-centro-de-acopio-para-ayudar-a-damnificados-por-el-terremoto-en-colombia/", updated:"11 ago 2026"},
   {name:"Sede administrativa Cruz Roja (24h)", dept:"Bogotá D.C.", addr:"Cra 24 #73-38, Bogotá", lat:4.6572, lng:-74.0637, cats:["agua_alimentos","abrigo","aseo","medico"], source:"Cruz Roja Colombiana", sourceUrl:"https://www.eltiempo.com/colombia/otras-ciudades/ayudas-tras-terremoto-en-colombia-centros-de-acopio-bancos-de-sangre-bancos-de-alimentos-canales-oficiales-y-puntos-de-donaciones-en-el-pais-3577631", updated:"11 ago 2026"},
   {name:"Estadio El Campín (Sencia)", dept:"Bogotá D.C.", addr:"Av. NQS con Cl 57, Bogotá", lat:4.6459, lng:-74.0785, cats:["agua_alimentos","abrigo","aseo"], source:"Sencia / Cruz Roja", sourceUrl:"https://www.infobae.com/colombia/2026/08/11/estadio-el-campin-sera-centro-de-acopio-para-ayudar-a-damnificados-por-el-terremoto-en-colombia/", updated:"11 ago 2026"},
+  {name:"Banco Nacional de Sangre - Cruz Roja", dept:"Bogotá D.C.", addr:"Av Cra 68 #68B-31, Bogotá", lat:4.6660, lng:-74.1130, cats:["medico"], phone:"Celular 310 217 2379", source:"Cruz Roja Colombiana", sourceUrl:"https://www.kienyke.com/colombia/cruz-roja-pide-donar-sangre-tras-terremoto-en-colombia", updated:"11 ago 2026"},
+  {name:"Banco Distrital de Sangre (Idcbis)", dept:"Bogotá D.C.", addr:"Bogotá (dirección exacta pendiente de confirmar)", lat:4.6097, lng:-74.0817, cats:["medico"], phone:"WhatsApp 324 502 7640 / 324 502 7663", source:"Gobernación de Cundinamarca / Idcbis", sourceUrl:"https://www.infobae.com/colombia/2026/08/12/la-gobernacion-de-cundinamarca-habilito-dos-centros-de-acopio-tras-el-terremoto-en-colombia-donde-y-que-puede-donar/", updated:"12 ago 2026"},
   {name:"Plaza de la Paz — Gobernación Cundinamarca", dept:"Cundinamarca", addr:"Cl 26 #51-53, Bogotá (sector CAN)", lat:4.6486, lng:-74.0975, cats:["agua_alimentos","abrigo","aseo","mascotas"], source:"Gobernación de Cundinamarca", sourceUrl:"https://www.infobae.com/colombia/2026/08/12/la-gobernacion-de-cundinamarca-habilito-dos-centros-de-acopio-tras-el-terremoto-en-colombia-donde-y-que-puede-donar/", updated:"12 ago 2026"},
   {name:"Plazoleta Jairo Varela", dept:"Valle del Cauca", addr:"Centro, Cali", lat:3.4519, lng:-76.5324, cats:["rescate","abrigo"], source:"Alcaldía de Cali", sourceUrl:"https://www.elpais.com.co/cali/habilitan-centro-de-acopio-en-cali-tras-fuerte-terremoto-asi-puede-donar-agua-y-elementos-de-seguridad-1047.html", updated:"10 ago 2026"},
   {name:"Banco de Alimentos de Cali", dept:"Valle del Cauca", addr:"Cl 24 #6-103, Cali", lat:3.4370, lng:-76.5305, cats:["agua_alimentos"], source:"Banco de Alimentos de Cali", sourceUrl:"https://www.eltiempo.com/datos/este-es-el-mapa-completo-de-los-centros-de-acopio-habilitados-en-colombia-para-ayudar-a-los-damnificados-del-terremoto-de-magnitud-7-3577654", updated:"11 ago 2026"},
@@ -285,6 +287,7 @@ const POINTS = [
   {name:"Banco de Alimentos Mons. R. López Londoño", dept:"Quindío", addr:"Armenia (centro)", lat:4.5339, lng:-75.6811, cats:["agua_alimentos"], source:"Banco de Alimentos de Armenia", sourceUrl:"https://www.eltiempo.com/datos/este-es-el-mapa-completo-de-los-centros-de-acopio-habilitados-en-colombia-para-ayudar-a-los-damnificados-del-terremoto-de-magnitud-7-3577654", updated:"11 ago 2026"},
   {name:"Fundación Banco Arquidiocesano de Alimentos", dept:"Antioquia", addr:"Cra 52 #30A-97, Medellín", lat:6.2331, lng:-75.5779, cats:["agua_alimentos"], source:"Alcaldía de Medellín", sourceUrl:"https://www.eltiempo.com/colombia/otras-ciudades/que-donar-y-que-no-donar-a-las-victimas-del-terremoto-en-colombia-guia-para-ayudar-3577542", updated:"11 ago 2026"},
   {name:"Fundación Saciar", dept:"Antioquia", addr:"Cra 50 #25-261, Medellín", lat:6.2278, lng:-75.5747, cats:["agua_alimentos"], source:"Alcaldía de Medellín", sourceUrl:"https://www.eltiempo.com/colombia/otras-ciudades/que-donar-y-que-no-donar-a-las-victimas-del-terremoto-en-colombia-guia-para-ayudar-3577542", updated:"11 ago 2026"},
+  {name:"Cruz Roja - donación de sangre Medellín", dept:"Antioquia", addr:"Cra 52 #25-310, Medellín", lat:6.2308, lng:-75.5906, cats:["medico"], phone:"Celular 310 701 6237", source:"Cruz Roja Colombiana", sourceUrl:"https://www.kienyke.com/colombia/cruz-roja-pide-donar-sangre-tras-terremoto-en-colombia", updated:"11 ago 2026"},
   {name:"Punto Alcaldía de Barranquilla", dept:"Atlántico", addr:"Cra 43 #6-120, Barranquillita", lat:10.9878, lng:-74.7889, cats:["agua_alimentos","medico","aseo","abrigo","ninos"], source:"Alcaldía de Barranquilla", sourceUrl:"https://www.eltiempo.com/colombia/otras-ciudades/ayudas-tras-terremoto-en-colombia-centros-de-acopio-bancos-de-sangre-bancos-de-alimentos-canales-oficiales-y-puntos-de-donaciones-en-el-pais-3577631", updated:"11 ago 2026"},
   {name:"Coliseo Bernardo Caraballo", dept:"Bolívar", addr:"Cartagena", lat:10.4106, lng:-75.5144, cats:["agua_alimentos","aseo","abrigo"], source:"Alcaldía de Cartagena", sourceUrl:"https://www.semana.com/nacion/articulo/como-ayudar-a-las-victimas-del-terremoto-estos-son-los-centros-de-acopio-en-bogota-medellin-y-otras-ciudades/202632/", updated:"11 ago 2026"},
   {name:"Alcaldía de Bucaramanga (1er piso)", dept:"Santander", addr:"Bucaramanga (centro)", lat:7.1193, lng:-73.1227, cats:["agua_alimentos","aseo","abrigo","medico"], source:"Alcaldía de Bucaramanga", sourceUrl:"https://www.vanguardia.com/area-metropolitana/bucaramanga/2026/08/11/terremoto-en-colombia-nueve-puntos-donde-puede-realizar-donaciones-en-bucaramanga/", updated:"11 ago 2026"}
@@ -362,7 +365,7 @@ function render(){
       `<div class="pop-name">${p.name}</div>
        <div class="pop-addr">${p.addr} · ${p.dept}</div>
        <div class="pop-tags">${tagsHTML(p,'tag')}</div>
-       <div class="pop-meta">Fuente: <a href="${p.sourceUrl}" target="_blank" rel="noopener">${p.source}</a><br>Actualizado: ${p.updated}</div>`
+       <div class="pop-meta">Fuente: <a href="${p.sourceUrl}" target="_blank" rel="noopener">${p.source}</a><br>${p.phone ? 'Tel: '+p.phone+'<br>' : ''}Actualizado: ${p.updated}</div>`
     );
     marker.addTo(markerLayer);
     markerRefs[p.name] = marker;
