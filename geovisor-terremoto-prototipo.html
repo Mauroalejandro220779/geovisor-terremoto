@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Geovisor — Terremoto Colombia 7,4 (prototipo)</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F5F3ED;
+    --panel:#FFFFFF;
+    --ink:#1C2321;
+    --ink-soft:#5B6360;
+    --hairline:#DCD7C8;
+    --teal:#16505F;
+    --teal-deep:#0E3841;
+    --amber:#D9A441;
+    --amber-deep:#8A5F1C;
+    --c-agua:#2E86AB;
+    --c-aseo:#4E9E6E;
+    --c-abrigo:#A9793F;
+    --c-rescate:#C1443C;
+    --c-medico:#8E44AD;
+    --c-mascotas:#D98F3B;
+    --c-ninos:#3E6EA5;
+    --radius:3px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;height:100%;}
+  body{
+    font-family:'IBM Plex Sans',sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    display:flex;
+    flex-direction:column;
+    height:100vh;
+    overflow:hidden;
+  }
+  .banner{
+    background:var(--amber);
+    color:var(--teal-deep);
+    padding:8px 16px;
+    font-size:12.5px;
+    font-family:'IBM Plex Mono',monospace;
+    letter-spacing:0.01em;
+    display:flex;
+    gap:8px;
+    align-items:baseline;
+    flex-wrap:wrap;
+    border-bottom:1px solid var(--amber-deep);
+  }
+  .banner b{font-weight:600;}
+  header.top{
+    background:var(--teal-deep);
+    color:#F5F3ED;
+    padding:14px 20px 12px;
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:8px;
+    border-bottom:1px solid var(--teal);
+  }
+  header.top h1{
+    font-size:17px;
+    margin:0;
+    font-weight:600;
+    letter-spacing:0.01em;
+  }
+  header.top .sub{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px;
+    color:#B9CBCE;
+  }
+  .layout{
+    flex:1;
+    display:grid;
+    grid-template-columns:340px 1fr;
+    min-height:0;
+  }
+  .sidebar{
+    background:var(--panel);
+    border-right:1px solid var(--hairline);
+    display:flex;
+    flex-direction:column;
+    min-height:0;
+  }
+  .sidebar section{
+    padding:14px 16px;
+    border-bottom:1px solid var(--hairline);
+  }
+  .sidebar h2{
+    font-size:10.5px;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--ink-soft);
+    margin:0 0 10px;
+    font-weight:600;
+  }
+  .chips{display:flex;flex-wrap:wrap;gap:6px;}
+  .chip{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    padding:5px 9px;
+    border-radius:999px;
+    border:1px solid var(--hairline);
+    background:var(--paper);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    cursor:pointer;
+    color:var(--ink-soft);
+    transition:border-color .12s, color .12s, background .12s;
+  }
+  .chip .dot{width:8px;height:8px;border-radius:50%;flex:none;}
+  .chip.active{
+    background:var(--ink);
+    color:#fff;
+    border-color:var(--ink);
+  }
+  .chip:focus-visible{outline:2px solid var(--teal);outline-offset:2px;}
+  select{
+    width:100%;
+    padding:7px 8px;
+    border:1px solid var(--hairline);
+    border-radius:var(--radius);
+    font-family:'IBM Plex Sans',sans-serif;
+    font-size:13px;
+    background:#fff;
+    color:var(--ink);
+  }
+  select:focus-visible{outline:2px solid var(--teal);outline-offset:1px;}
+  .count{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    color:var(--ink-soft);
+    margin-top:8px;
+  }
+  .list{
+    flex:1;
+    overflow-y:auto;
+    min-height:0;
+  }
+  .point-btn{
+    display:block;
+    width:100%;
+    text-align:left;
+    background:none;
+    border:none;
+    border-bottom:1px solid var(--hairline);
+    padding:11px 16px;
+    cursor:pointer;
+    font-family:inherit;
+    color:var(--ink);
+  }
+  .point-btn:hover{background:var(--paper);}
+  .point-btn:focus-visible{outline:2px solid var(--teal);outline-offset:-2px;}
+  .point-btn .pname{font-size:13px;font-weight:600;margin-bottom:2px;}
+  .point-btn .paddr{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;
+    color:var(--ink-soft);
+    margin-bottom:5px;
+  }
+  .tags{display:flex;flex-wrap:wrap;gap:4px;}
+  .tag{
+    font-size:9.5px;
+    font-family:'IBM Plex Mono',monospace;
+    padding:2px 6px;
+    border-radius:2px;
+    color:#fff;
+    letter-spacing:0.02em;
+  }
+  #map{width:100%;height:100%;}
+  .leaflet-popup-content-wrapper{border-radius:3px;font-family:'IBM Plex Sans',sans-serif;}
+  .pop-name{font-size:13.5px;font-weight:700;margin:0 0 3px;}
+  .pop-addr{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-soft);margin:0 0 8px;}
+  .pop-tags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px;}
+  .pop-meta{font-size:10.5px;color:var(--ink-soft);border-top:1px solid var(--hairline);padding-top:6px;margin-top:2px;}
+  .pop-meta a{color:var(--teal);}
+  .legend-box{
+    position:absolute;
+    bottom:18px;
+    left:18px;
+    background:rgba(255,255,255,0.96);
+    border:1px solid var(--hairline);
+    border-radius:3px;
+    padding:9px 12px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;
+    z-index:500;
+    box-shadow:0 2px 6px rgba(0,0,0,0.08);
+  }
+  .legend-box .row{display:flex;align-items:center;gap:6px;margin:3px 0;color:var(--ink-soft);}
+  .legend-box .dot{width:8px;height:8px;border-radius:50%;flex:none;}
+  @media (max-width:780px){
+    .layout{grid-template-columns:1fr;grid-template-rows:auto 1fr;}
+    .sidebar{border-right:none;border-bottom:1px solid var(--hairline);max-height:42vh;}
+    .legend-box{display:none;}
+  }
+  @media (prefers-reduced-motion:no-preference){
+    .chip{transition:border-color .12s, color .12s, background .12s;}
+  }
+</style>
+</head>
+<body>
+
+<div class="banner">
+  <span>⚠ <b>PROTOTIPO — no es fuente oficial.</b></span>
+  <span>Coordenadas aproximadas, sin geocodificación verificada. Confirmar dirección e insumos vigentes con la entidad antes de desplazarse o donar.</span>
+</div>
+
+<header class="top">
+  <h1>Geovisor · Terremoto Colombia 7,4</h1>
+  <span class="sub">18 puntos · datos consolidados manualmente al 12·08·2026</span>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <section>
+      <h2>Qué se necesita</h2>
+      <div class="chips" id="catChips"></div>
+    </section>
+    <section>
+      <h2>Departamento</h2>
+      <select id="deptFilter">
+        <option value="all">Todos</option>
+      </select>
+      <div class="count" id="resultCount"></div>
+    </section>
+    <div class="list" id="pointList"></div>
+  </aside>
+  <div style="position:relative;">
+    <div id="map"></div>
+    <div class="legend-box" id="legendBox"></div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+const CATS = {
+  agua_alimentos: {label:'Agua y alimentos', color:'var(--c-agua)', hex:'#2E86AB'},
+  aseo:           {label:'Aseo personal',    color:'var(--c-aseo)', hex:'#4E9E6E'},
+  abrigo:         {label:'Cobijas / colchonetas', color:'var(--c-abrigo)', hex:'#A9793F'},
+  rescate:        {label:'Insumos de rescate', color:'var(--c-rescate)', hex:'#C1443C'},
+  medico:         {label:'Insumos médicos / sangre', color:'var(--c-medico)', hex:'#8E44AD'},
+  mascotas:       {label:'Mascotas', color:'var(--c-mascotas)', hex:'#D98F3B'},
+  ninos:          {label:'Niños y bebés', color:'var(--c-ninos)', hex:'#3E6EA5'}
+};
+
+// Datos consolidados manualmente a partir de comunicados de alcaldías, gobernaciones,
+// Cruz Roja Colombiana y cobertura de prensa (El Tiempo, Infobae, El País, Semana), 11-12 ago 2026.
+// Coordenadas APROXIMADAS (ubicación de referencia del sector) — pendientes de geocodificación verificada.
+const POINTS = [
+  {name:"Universidad Jorge Tadeo Lozano", dept:"Bogotá D.C.", addr:"Cra 4 #22-61, Bogotá", lat:4.6078, lng:-74.0669, cats:["agua_alimentos","abrigo","aseo","medico"], source:"Alcaldía de Bogotá / Cruz Roja", sourceUrl:"https://www.eltiempo.com/colombia/otras-ciudades/como-ayudar-tras-terremoto-de-7-4-en-colombia-estos-son-los-centros-de-acopio-bancos-de-sangre-y-alimentos-canales-oficiales-y-puntos-de-donacion-3577631", updated:"11 ago 2026"},
+  {name:"Unicentro Bogotá", dept:"Bogotá D.C.", addr:"Cra 15 #124-30, Bogotá", lat:4.7014, lng:-74.0432, cats:["agua_alimentos","abrigo","aseo","medico"], source:"Alcaldía de Bogotá / Cruz Roja", sourceUrl:"https://www.infobae.com/colombia/2026/08/11/estadio-el-campin-sera-centro-de-acopio-para-ayudar-a-damnificados-por-el-terremoto-en-colombia/", updated:"11 ago 2026"},
+  {name:"Punto Usaquén", dept:"Bogotá D.C.", addr:"Cl 161A #7F-55, Bogotá", lat:4.7420, lng:-74.0300, cats:["agua_alimentos","abrigo","aseo"], source:"Alcaldía de Bogotá", sourceUrl:"https://www.infobae.com/colombia/2026/08/11/estadio-el-campin-sera-centro-de-acopio-para-ayudar-a-damnificados-por-el-terremoto-en-colombia/", updated:"11 ago 2026"},
+  {name:"Sede administrativa Cruz Roja (24h)", dept:"Bogotá D.C.", addr:"Cra 24 #73-38, Bogotá", lat:4.6572, lng:-74.0637, cats:["agua_alimentos","abrigo","aseo","medico"], source:"Cruz Roja Colombiana", sourceUrl:"https://www.eltiempo.com/colombia/otras-ciudades/ayudas-tras-terremoto-en-colombia-centros-de-acopio-bancos-de-sangre-bancos-de-alimentos-canales-oficiales-y-puntos-de-donaciones-en-el-pais-3577631", updated:"11 ago 2026"},
+  {name:"Estadio El Campín (Sencia)", dept:"Bogotá D.C.", addr:"Av. NQS con Cl 57, Bogotá", lat:4.6459, lng:-74.0785, cats:["agua_alimentos","abrigo","aseo"], source:"Sencia / Cruz Roja", sourceUrl:"https://www.infobae.com/colombia/2026/08/11/estadio-el-campin-sera-centro-de-acopio-para-ayudar-a-damnificados-por-el-terremoto-en-colombia/", updated:"11 ago 2026"},
+  {name:"Plaza de la Paz — Gobernación Cundinamarca", dept:"Cundinamarca", addr:"Cl 26 #51-53, Bogotá (sector CAN)", lat:4.6486, lng:-74.0975, cats:["agua_alimentos","abrigo","aseo","mascotas"], source:"Gobernación de Cundinamarca", sourceUrl:"https://www.infobae.com/colombia/2026/08/12/la-gobernacion-de-cundinamarca-habilito-dos-centros-de-acopio-tras-el-terremoto-en-colombia-donde-y-que-puede-donar/", updated:"12 ago 2026"},
+  {name:"Plazoleta Jairo Varela", dept:"Valle del Cauca", addr:"Centro, Cali", lat:3.4519, lng:-76.5324, cats:["rescate","abrigo"], source:"Alcaldía de Cali", sourceUrl:"https://www.elpais.com.co/cali/habilitan-centro-de-acopio-en-cali-tras-fuerte-terremoto-asi-puede-donar-agua-y-elementos-de-seguridad-1047.html", updated:"10 ago 2026"},
+  {name:"Banco de Alimentos de Cali", dept:"Valle del Cauca", addr:"Cl 24 #6-103, Cali", lat:3.4370, lng:-76.5305, cats:["agua_alimentos"], source:"Banco de Alimentos de Cali", sourceUrl:"https://www.eltiempo.com/datos/este-es-el-mapa-completo-de-los-centros-de-acopio-habilitados-en-colombia-para-ayudar-a-los-damnificados-del-terremoto-de-magnitud-7-3577654", updated:"11 ago 2026"},
+  {name:"CAFE Ormaza", dept:"Risaralda", addr:"Cl 3 bis #5-38, Pereira", lat:4.8087, lng:-75.6906, cats:["agua_alimentos","abrigo","aseo"], source:"Alcaldía de Pereira", sourceUrl:"https://www.semana.com/nacion/articulo/como-ayudar-a-las-victimas-del-terremoto-estos-son-los-centros-de-acopio-en-bogota-medellin-y-otras-ciudades/202632/", updated:"11 ago 2026"},
+  {name:"CAFE San Nicolás", dept:"Risaralda", addr:"Cra 14 bis #28-38, Pereira", lat:4.8140, lng:-75.6960, cats:["agua_alimentos","abrigo","aseo"], source:"Alcaldía de Pereira", sourceUrl:"https://www.semana.com/nacion/articulo/como-ayudar-a-las-victimas-del-terremoto-estos-son-los-centros-de-acopio-en-bogota-medellin-y-otras-ciudades/202632/", updated:"11 ago 2026"},
+  {name:"Banco de Alimentos de Manizales", dept:"Caldas", addr:"Cl 49 #27A-85, Manizales", lat:5.0703, lng:-75.5138, cats:["agua_alimentos"], source:"Banco de Alimentos de Manizales", sourceUrl:"https://www.eltiempo.com/datos/este-es-el-mapa-completo-de-los-centros-de-acopio-habilitados-en-colombia-para-ayudar-a-los-damnificados-del-terremoto-de-magnitud-7-3577654", updated:"11 ago 2026"},
+  {name:"Hemocentro del Café", dept:"Caldas", addr:"Cra 21 #70-06, Manizales", lat:5.0637, lng:-75.4925, cats:["medico"], source:"Hemocentro del Café (prioridad O+ / O-)", sourceUrl:"https://www.eltiempo.com/datos/este-es-el-mapa-completo-de-los-centros-de-acopio-habilitados-en-colombia-para-ayudar-a-los-damnificados-del-terremoto-de-magnitud-7-3577654", updated:"11 ago 2026"},
+  {name:"Banco de Alimentos Mons. R. López Londoño", dept:"Quindío", addr:"Armenia (centro)", lat:4.5339, lng:-75.6811, cats:["agua_alimentos"], source:"Banco de Alimentos de Armenia", sourceUrl:"https://www.eltiempo.com/datos/este-es-el-mapa-completo-de-los-centros-de-acopio-habilitados-en-colombia-para-ayudar-a-los-damnificados-del-terremoto-de-magnitud-7-3577654", updated:"11 ago 2026"},
+  {name:"Fundación Banco Arquidiocesano de Alimentos", dept:"Antioquia", addr:"Cra 52 #30A-97, Medellín", lat:6.2331, lng:-75.5779, cats:["agua_alimentos"], source:"Alcaldía de Medellín", sourceUrl:"https://www.eltiempo.com/colombia/otras-ciudades/que-donar-y-que-no-donar-a-las-victimas-del-terremoto-en-colombia-guia-para-ayudar-3577542", updated:"11 ago 2026"},
+  {name:"Fundación Saciar", dept:"Antioquia", addr:"Cra 50 #25-261, Medellín", lat:6.2278, lng:-75.5747, cats:["agua_alimentos"], source:"Alcaldía de Medellín", sourceUrl:"https://www.eltiempo.com/colombia/otras-ciudades/que-donar-y-que-no-donar-a-las-victimas-del-terremoto-en-colombia-guia-para-ayudar-3577542", updated:"11 ago 2026"},
+  {name:"Punto Alcaldía de Barranquilla", dept:"Atlántico", addr:"Cra 43 #6-120, Barranquillita", lat:10.9878, lng:-74.7889, cats:["agua_alimentos","medico","aseo","abrigo","ninos"], source:"Alcaldía de Barranquilla", sourceUrl:"https://www.eltiempo.com/colombia/otras-ciudades/ayudas-tras-terremoto-en-colombia-centros-de-acopio-bancos-de-sangre-bancos-de-alimentos-canales-oficiales-y-puntos-de-donaciones-en-el-pais-3577631", updated:"11 ago 2026"},
+  {name:"Coliseo Bernardo Caraballo", dept:"Bolívar", addr:"Cartagena", lat:10.4106, lng:-75.5144, cats:["agua_alimentos","aseo","abrigo"], source:"Alcaldía de Cartagena", sourceUrl:"https://www.semana.com/nacion/articulo/como-ayudar-a-las-victimas-del-terremoto-estos-son-los-centros-de-acopio-en-bogota-medellin-y-otras-ciudades/202632/", updated:"11 ago 2026"},
+  {name:"Alcaldía de Bucaramanga (1er piso)", dept:"Santander", addr:"Bucaramanga (centro)", lat:7.1193, lng:-73.1227, cats:["agua_alimentos","aseo","abrigo","medico"], source:"Alcaldía de Bucaramanga", sourceUrl:"https://www.vanguardia.com/area-metropolitana/bucaramanga/2026/08/11/terremoto-en-colombia-nueve-puntos-donde-puede-realizar-donaciones-en-bucaramanga/", updated:"11 ago 2026"}
+];
+
+// ---- estado ----
+let activeCats = new Set(Object.keys(CATS));
+let activeDept = "all";
+
+// ---- construir chips de categoría ----
+const chipsEl = document.getElementById('catChips');
+Object.entries(CATS).forEach(([id,c])=>{
+  const btn = document.createElement('button');
+  btn.className = 'chip active';
+  btn.setAttribute('type','button');
+  btn.innerHTML = `<span class="dot" style="background:${c.hex}"></span>${c.label}`;
+  btn.addEventListener('click', ()=>{
+    if(activeCats.has(id)){ activeCats.delete(id); btn.classList.remove('active'); }
+    else { activeCats.add(id); btn.classList.add('active'); }
+    render();
+  });
+  chipsEl.appendChild(btn);
+});
+
+// ---- construir filtro de departamento ----
+const deptSel = document.getElementById('deptFilter');
+[...new Set(POINTS.map(p=>p.dept))].sort().forEach(d=>{
+  const opt = document.createElement('option');
+  opt.value = d; opt.textContent = d;
+  deptSel.appendChild(opt);
+});
+deptSel.addEventListener('change', e=>{ activeDept = e.target.value; render(); });
+
+// ---- leyenda del mapa ----
+const legendEl = document.getElementById('legendBox');
+legendEl.innerHTML = '<div style="font-weight:600;margin-bottom:4px;">LEYENDA</div>' +
+  Object.values(CATS).map(c=>`<div class="row"><span class="dot" style="background:${c.hex}"></span>${c.label}</div>`).join('');
+
+// ---- mapa ----
+const map = L.map('map', {zoomControl:true}).setView([5.2, -75.3], 6.3);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom:18,
+  attribution:'&copy; OpenStreetMap contributors'
+}).addTo(map);
+
+let markerLayer = L.layerGroup().addTo(map);
+const markerRefs = {};
+
+function primaryColor(p){
+  return CATS[p.cats[0]].hex;
+}
+
+function tagsHTML(p, sizeClass){
+  return p.cats.map(c=>`<span class="${sizeClass}" style="background:${CATS[c].hex}">${CATS[c].label}</span>`).join('');
+}
+
+function matches(p){
+  const catOK = p.cats.some(c=>activeCats.has(c));
+  const deptOK = activeDept === 'all' || p.dept === activeDept;
+  return catOK && deptOK;
+}
+
+function render(){
+  markerLayer.clearLayers();
+  const listEl = document.getElementById('pointList');
+  listEl.innerHTML = '';
+  const visible = POINTS.filter(matches);
+  document.getElementById('resultCount').textContent = visible.length + ' de ' + POINTS.length + ' puntos visibles';
+
+  visible.forEach(p=>{
+    const marker = L.circleMarker([p.lat,p.lng], {
+      radius:7, weight:2, color:'#fff', fillColor:primaryColor(p), fillOpacity:0.95
+    });
+    marker.bindPopup(
+      `<div class="pop-name">${p.name}</div>
+       <div class="pop-addr">${p.addr} · ${p.dept}</div>
+       <div class="pop-tags">${tagsHTML(p,'tag')}</div>
+       <div class="pop-meta">Fuente: <a href="${p.sourceUrl}" target="_blank" rel="noopener">${p.source}</a><br>Actualizado: ${p.updated}</div>`
+    );
+    marker.addTo(markerLayer);
+    markerRefs[p.name] = marker;
+
+    const btn = document.createElement('button');
+    btn.className = 'point-btn';
+    btn.innerHTML = `<div class="pname">${p.name}</div>
+      <div class="paddr">${p.addr} · ${p.dept}</div>
+      <div class="tags">${tagsHTML(p,'tag')}</div>`;
+    btn.addEventListener('click', ()=>{
+      map.flyTo([p.lat,p.lng], 13, {duration:0.6});
+      marker.openPopup();
+    });
+    listEl.appendChild(btn);
+  });
+}
+
+render();
+</script>
+</body>
+</html>
