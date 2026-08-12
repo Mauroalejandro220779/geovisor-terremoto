@@ -1,0 +1,19 @@
+:root{
+  --paper:#F5F3ED;
+  --panel:#FFFFFF;
+  --ink:#1C2321;
+  --ink-soft:#5B6360;
+  --hairline:#DCD7C8;
+  --teal:#16505F;
+  --teal-deep:#0E3841;
+  --amber:#D9A441;
+  --amber-deep:#8A5F1C;
+  --c-agua:#2E86AB;
+  --c-aseo:#4E9E6E;
+  --c-abrigo:#A9793F;
+  --c-rescate:#C1443C;
+  --c-medico:#8E44AD;
+  --c-mascotas:#D98F3B;
+  --c-ninos:#3E6EA5;
+  --radius:3px;
+}
