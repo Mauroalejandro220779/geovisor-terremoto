@@ -230,7 +230,7 @@
 
 <header class="top">
   <h1>Dónde Donar — Terremoto Colombia 7,4</h1>
-  <span class="sub">32 puntos · datos consolidados manualmente al 12·08·2026</span>
+  <span class="sub">33 puntos · datos consolidados manualmente al 12·08·2026</span>
 </header>
 
 <div class="layout">
@@ -284,6 +284,7 @@ const POINTS = [
   {name:"Plaza de la Paz — Gobernación Cundinamarca", dept:"Cundinamarca", addr:"Cl 26 #51-53, Bogotá (sector CAN)", lat:4.6486, lng:-74.0975, cats:["agua_alimentos","abrigo","aseo","mascotas"], source:"Gobernación de Cundinamarca", sourceUrl:"https://www.infobae.com/colombia/2026/08/12/la-gobernacion-de-cundinamarca-habilito-dos-centros-de-acopio-tras-el-terremoto-en-colombia-donde-y-que-puede-donar/", updated:"12 ago 2026"},
   {name:"Centro de Innovación e Integración Social", dept:"Cundinamarca", addr:"Cra 7 con Cl 4 (antiguo ancianato), Fusagasugá", lat:4.3453, lng:-74.3620, cats:["agua_alimentos","abrigo","aseo","medico","mascotas"], source:"Alcaldía de Fusagasugá", sourceUrl:"", updated:"12 ago 2026", note:"Punto de recolección activo hasta el jueves 13 de agosto"},
   {name:"Ecoparque Chinauta — Punto de acopio para Buenaventura", dept:"Cundinamarca", addr:"Km 70 vía Melgar, Ecoparque Chinauta, Fusagasugá (coordenadas aproximadas)", lat:4.2300, lng:-74.5600, cats:["agua_alimentos","aseo","ninos","medico","rescate","abrigo"], phone:"WhatsApp 300 648 9478", source:"Publicación oficial de Ecoparque Chinauta (volante propio), 12 ago 2026", sourceUrl:"", updated:"12 ago 2026", note:"Activo hasta el viernes 14 de agosto, 5:00pm. Destino: Buenaventura.<br>NO llevar: colchonetas/cobijas, bebidas, ropa/zapatos, juguetes/kits escolares — ya cubiertos por otros canales."},
+  {name:"La Calera Abraza a Colombia — Punto de Recolección", dept:"Cundinamarca", addr:"Entrada Capilla, junto a la Alcaldía Municipal, La Calera", lat:4.7217, lng:-73.9689, cats:[], catsUnknown:true, source:"Volante oficial de la Alcaldía de La Calera, 11 ago 2026 — insumos específicos no confirmados", sourceUrl:"", updated:"12 ago 2026", note:"Días: miércoles, jueves, viernes y sábado. Horario: 8:00am-5:00pm. Alcalde: Juan Carlos Hernández Arévalo."},
   {name:"Plazoleta Jairo Varela", dept:"Valle del Cauca", addr:"Centro, Cali", lat:3.4519, lng:-76.5324, cats:["rescate","abrigo"], source:"Alcaldía de Cali", sourceUrl:"https://www.elpais.com.co/cali/habilitan-centro-de-acopio-en-cali-tras-fuerte-terremoto-asi-puede-donar-agua-y-elementos-de-seguridad-1047.html", updated:"10 ago 2026"},
   {name:"Banco de Alimentos de Cali", dept:"Valle del Cauca", addr:"Cl 24 #6-103, Cali", lat:3.4370, lng:-76.5305, cats:["agua_alimentos"], source:"Banco de Alimentos de Cali", sourceUrl:"https://www.eltiempo.com/datos/este-es-el-mapa-completo-de-los-centros-de-acopio-habilitados-en-colombia-para-ayudar-a-los-damnificados-del-terremoto-de-magnitud-7-3577654", updated:"11 ago 2026"},
   {name:"Antigua Licorera del Valle", dept:"Valle del Cauca", addr:"Cra 1 #26-85, Cali", lat:3.4595, lng:-76.5280, cats:["agua_alimentos","abrigo","aseo","rescate","mascotas"], source:"Gobernación del Valle del Cauca — campaña Todos Somos Valle", sourceUrl:"https://www.elpais.com.co/valle/en-vivo-terremoto-en-el-valle-deja-hasta-el-momento-27-muertos-tres-de-las-victimas-eran-ninos-1056.html", updated:"12 ago 2026"},
@@ -350,15 +351,19 @@ let markerLayer = L.layerGroup().addTo(map);
 const markerRefs = {};
 
 function primaryColor(p){
+  if(p.catsUnknown) return '#8A8A8A';
   return CATS[p.cats[0]].hex;
 }
 
 function tagsHTML(p, sizeClass){
+  if(p.catsUnknown){
+    return `<span class="${sizeClass}" style="background:#8A8A8A">Insumos sin confirmar — llamar antes de ir</span>`;
+  }
   return p.cats.map(c=>`<span class="${sizeClass}" style="background:${CATS[c].hex}">${CATS[c].label}</span>`).join('');
 }
 
 function matches(p){
-  const catOK = p.cats.some(c=>activeCats.has(c));
+  const catOK = p.catsUnknown === true || p.cats.some(c=>activeCats.has(c));
   const deptOK = activeDept === 'all' || p.dept === activeDept;
   return catOK && deptOK;
 }
