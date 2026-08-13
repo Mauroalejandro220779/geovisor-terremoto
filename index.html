@@ -230,7 +230,7 @@
 
 <header class="top">
   <h1>Dónde Donar — Terremoto Colombia 7,4</h1>
-  <span class="sub">35 puntos · datos consolidados manualmente al 12·08·2026</span>
+  <span class="sub"></span>
 </header>
 
 <div class="layout">
@@ -256,6 +256,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
+const SITE_LAST_UPDATED = "13 ago 2026, 1:00pm";
 const CATS = {
   agua_alimentos: {label:'Agua y alimentos', color:'var(--c-agua)', hex:'#2E86AB'},
   aseo:           {label:'Aseo personal',    color:'var(--c-aseo)', hex:'#4E9E6E'},
@@ -328,6 +329,9 @@ const POINTS = [
   {name:"Coliseo Bernardo Caraballo", dept:"Bolívar", addr:"Cartagena", lat:10.4106, lng:-75.5144, cats:["agua_alimentos","aseo","abrigo"], source:"Alcaldía de Cartagena", sourceUrl:"https://www.semana.com/nacion/articulo/como-ayudar-a-las-victimas-del-terremoto-estos-son-los-centros-de-acopio-en-bogota-medellin-y-otras-ciudades/202632/", updated:"11 ago 2026"},
   {name:"Alcaldía de Bucaramanga (1er piso)", dept:"Santander", addr:"Bucaramanga (centro)", lat:7.1193, lng:-73.1227, cats:["agua_alimentos","aseo","abrigo","medico"], source:"Alcaldía de Bucaramanga", sourceUrl:"https://www.vanguardia.com/area-metropolitana/bucaramanga/2026/08/11/terremoto-en-colombia-nueve-puntos-donde-puede-realizar-donaciones-en-bucaramanga/", updated:"11 ago 2026"}
 ];
+
+document.querySelector('.sub').textContent =
+  `${POINTS.length} puntos · última actualización: ${SITE_LAST_UPDATED}`;
 
 // ---- estado ----
 let activeCats = new Set(Object.keys(CATS));
