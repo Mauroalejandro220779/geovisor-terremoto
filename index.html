@@ -230,7 +230,7 @@
 
 <header class="top">
   <h1>Dónde Donar — Terremoto Colombia 7,4</h1>
-  <span class="sub">34 puntos · datos consolidados manualmente al 12·08·2026</span>
+  <span class="sub">35 puntos · datos consolidados manualmente al 12·08·2026</span>
 </header>
 
 <div class="layout">
@@ -263,7 +263,8 @@ const CATS = {
   rescate:        {label:'Insumos de rescate', color:'var(--c-rescate)', hex:'#C1443C'},
   medico:         {label:'Insumos médicos / sangre', color:'var(--c-medico)', hex:'#8E44AD'},
   mascotas:       {label:'Mascotas', color:'var(--c-mascotas)', hex:'#D98F3B'},
-  ninos:          {label:'Niños y bebés', color:'var(--c-ninos)', hex:'#3E6EA5'}
+  ninos:          {label:'Niños y bebés', color:'var(--c-ninos)', hex:'#3E6EA5'},
+  ropa:           {label:'Ropa', color:'var(--c-ropa)', hex:'#7A5C8E'}
 };
 
 // Datos consolidados manualmente a partir de comunicados de alcaldías, gobernaciones,
@@ -285,6 +286,7 @@ const POINTS = [
   {name:"Centro de Innovación e Integración Social", dept:"Cundinamarca", addr:"Cra 7 con Cl 4 (antiguo ancianato), Fusagasugá", lat:4.3453, lng:-74.3620, cats:["agua_alimentos","abrigo","aseo","medico","mascotas"], source:"Alcaldía de Fusagasugá", sourceUrl:"", updated:"12 ago 2026", note:"Punto de recolección activo hasta el jueves 13 de agosto"},
   {name:"Ecoparque Chinauta — Punto de acopio para Buenaventura", dept:"Cundinamarca", addr:"Km 70 vía Melgar, Ecoparque Chinauta, Fusagasugá (coordenadas aproximadas)", lat:4.2300, lng:-74.5600, cats:["agua_alimentos","aseo","ninos","medico","rescate","abrigo"], phone:"WhatsApp 300 648 9478", source:"Publicación oficial de Ecoparque Chinauta (volante propio), 12 ago 2026", sourceUrl:"", updated:"12 ago 2026", note:"Activo hasta el viernes 14 de agosto, 5:00pm. Destino: Buenaventura.<br>NO llevar: colchonetas/cobijas, bebidas, ropa/zapatos, juguetes/kits escolares — ya cubiertos por otros canales."},
   {name:"La Calera Abraza a Colombia — Punto de Recolección", dept:"Cundinamarca", addr:"Entrada Capilla, junto a la Alcaldía Municipal, La Calera", lat:4.7217, lng:-73.9689, cats:[], catsUnknown:true, source:"Volante oficial de la Alcaldía de La Calera, 11 ago 2026 — insumos específicos no confirmados", sourceUrl:"", updated:"12 ago 2026", note:"Días: miércoles, jueves, viernes y sábado. Horario: 8:00am-5:00pm. Alcalde: Juan Carlos Hernández Arévalo."},
+  {name:"Casa de Bienestar de la Mujer Enraizada", dept:"Cundinamarca", addr:"Cl 17a #14-32, Barrio Piedra Grande, Fusagasugá", lat:4.3410, lng:-74.3660, cats:["ropa","abrigo","agua_alimentos","aseo","ninos","medico","rescate","mascotas"], phone:"321 477 7644", source:"Volante oficial de Mujer Enraizada, 12 ago 2026", sourceUrl:"", updated:"12 ago 2026"},
   {name:"Plazoleta Jairo Varela", dept:"Valle del Cauca", addr:"Centro, Cali", lat:3.4519, lng:-76.5324, cats:["rescate","abrigo"], source:"Alcaldía de Cali", sourceUrl:"https://www.elpais.com.co/cali/habilitan-centro-de-acopio-en-cali-tras-fuerte-terremoto-asi-puede-donar-agua-y-elementos-de-seguridad-1047.html", updated:"10 ago 2026"},
   {name:"Banco de Alimentos de Cali", dept:"Valle del Cauca", addr:"Cl 24 #6-103, Cali", lat:3.4370, lng:-76.5305, cats:["agua_alimentos"], source:"Banco de Alimentos de Cali", sourceUrl:"https://www.eltiempo.com/datos/este-es-el-mapa-completo-de-los-centros-de-acopio-habilitados-en-colombia-para-ayudar-a-los-damnificados-del-terremoto-de-magnitud-7-3577654", updated:"11 ago 2026"},
   {name:"Antigua Licorera del Valle", dept:"Valle del Cauca", addr:"Cra 1 #26-85, Cali", lat:3.4595, lng:-76.5280, cats:["agua_alimentos","abrigo","aseo","rescate","mascotas"], source:"Gobernación del Valle del Cauca — campaña Todos Somos Valle", sourceUrl:"https://www.elpais.com.co/valle/en-vivo-terremoto-en-el-valle-deja-hasta-el-momento-27-muertos-tres-de-las-victimas-eran-ninos-1056.html", updated:"12 ago 2026"},
