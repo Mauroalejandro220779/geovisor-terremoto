@@ -370,7 +370,7 @@ const deptSel = document.getElementById('deptFilter');
   opt.value = d; opt.textContent = d;
   deptSel.appendChild(opt);
 });
-deptSel.addEventListener('change', e=>{ activeDept = e.target.value; render(); });
+deptSel.addEventListener('change', e=>{ activeDept = e.target.value; render(); fitToDept(activeDept); });
 
 // ---- leyenda del mapa ----
 const legendEl = document.getElementById('legendBox');
@@ -386,6 +386,19 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 let markerLayer = L.layerGroup().addTo(map);
 const markerRefs = {};
+
+const INITIAL_VIEW = {center:[5.2, -75.3], zoom:6.3};
+
+function fitToDept(dept){
+  if(dept === 'all'){
+    map.setView(INITIAL_VIEW.center, INITIAL_VIEW.zoom);
+    return;
+  }
+  const pts = POINTS.filter(p=>p.dept === dept);
+  if(pts.length === 0) return;
+  const bounds = L.latLngBounds(pts.map(p=>[p.lat,p.lng]));
+  map.fitBounds(bounds, {padding:[40,40], maxZoom:13});
+}
 
 function primaryColor(p){
   if(p.catsUnknown) return '#8A8A8A';
