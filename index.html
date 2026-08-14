@@ -256,7 +256,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
-const SITE_LAST_UPDATED = "14 ago 2026, 7:59am";
+const SITE_LAST_UPDATED = "14 ago 2026, 8:16am";
 const CATS = {
   agua_alimentos: {label:'Agua y alimentos', color:'var(--c-agua)', hex:'#2E86AB'},
   aseo:           {label:'Aseo personal',    color:'var(--c-aseo)', hex:'#4E9E6E'},
@@ -335,6 +335,9 @@ const POINTS = [
   {name:"Expreso Palmira — Terminal del Sur Medellín", dept:"Antioquia", addr:"Terminal de Transportes Sur, Local 32, Medellín (oficina general — confirmar al llegar)", lat:6.2225, lng:-75.5885, cats:["agua_alimentos","aseo"], phone:"310 213 96 49 (línea nacional, confirmada por Mauro) / 310 898 2921 (oficina local, según directorio)", source:PALMIRA_SOURCE, sourceUrl:"", updated:"12 ago 2026", note:PALMIRA_NOTE},
   {name:"Punto Alcaldía de Barranquilla", dept:"Atlántico", addr:"Cra 43 #6-120, Barranquillita", lat:10.9878, lng:-74.7889, cats:["agua_alimentos","medico","aseo","abrigo","ninos"], source:"Alcaldía de Barranquilla", sourceUrl:"https://www.eltiempo.com/colombia/otras-ciudades/ayudas-tras-terremoto-en-colombia-centros-de-acopio-bancos-de-sangre-bancos-de-alimentos-canales-oficiales-y-puntos-de-donaciones-en-el-pais-3577631", updated:"11 ago 2026"},
   {name:"Coliseo Bernardo Caraballo", dept:"Bolívar", addr:"Cartagena", lat:10.4106, lng:-75.5144, cats:["agua_alimentos","aseo","abrigo"], source:"Alcaldía de Cartagena", sourceUrl:"https://www.semana.com/nacion/articulo/como-ayudar-a-las-victimas-del-terremoto-estos-son-los-centros-de-acopio-en-bogota-medellin-y-otras-ciudades/202632/", updated:"11 ago 2026"},
+  {name:"Ogricc — Alcaldía de Santa Marta", dept:"Magdalena", addr:"Cl 16 #14A-08, segundo piso, barrio El Cundí, Santa Marta", lat:11.2280, lng:-74.1980, cats:["agua_alimentos","abrigo","aseo","medico","ropa"], source:"El Informador / El Callejero, 10 ago 2026", sourceUrl:"https://www.elinformador.com.co/index.php/la-ciudad/81-distrito/356914-cada-aporte-cuenta-santa-marta-se-une-por-los-afectados-por-el-terremoto", updated:"14 ago 2026", note:"Horario: 8:30am-5:30pm. Punto de clasificación antes de enviar a zonas afectadas."},
+  {name:"Antiguo Hospital San Juan de Dios — Gobernación del Magdalena", dept:"Magdalena", addr:"Santa Marta (dirección exacta sin confirmar)", lat:11.2404, lng:-74.1990, cats:[], catsUnknown:true, source:"El Informador, 13 ago 2026 — campaña 'Magdalena Solidario con Colombia'", sourceUrl:"https://www.elinformador.com.co/index.php/el-magdalena/83-departamento/357079-gobernacion-mantiene-centro-de-acopio-en-santa-marta-para-damnificados-por-el-sismo", updated:"14 ago 2026", note:"Insumos específicos sin confirmar — llamar antes de ir."},
+  {name:"Cruz Roja Seccional Magdalena", dept:"Magdalena", addr:"Cra 5 #25-27, Santa Marta", lat:11.2380, lng:-74.1950, cats:["ropa","agua_alimentos","aseo","mascotas"], source:"Radio Hoy, 13 ago 2026", sourceUrl:"https://www.radiohoy.com/2026/08/13/cruz-roja-seccional-santa-marta-dispone-centro-de-acopio-en-apoyo-a-afectados-por-terremoto/808270/", updated:"14 ago 2026", note:"Horario desde 8:00am. IMPORTANTE: NO reciben medicamentos, a diferencia de otros puntos de Cruz Roja. También reciben correas para mascotas."},
   {name:"Alcaldía de Bucaramanga (1er piso)", dept:"Santander", addr:"Bucaramanga (centro)", lat:7.1193, lng:-73.1227, cats:["agua_alimentos","aseo","abrigo","medico"], source:"Alcaldía de Bucaramanga", sourceUrl:"https://www.vanguardia.com/area-metropolitana/bucaramanga/2026/08/11/terremoto-en-colombia-nueve-puntos-donde-puede-realizar-donaciones-en-bucaramanga/", updated:"11 ago 2026"}
 ];
 
