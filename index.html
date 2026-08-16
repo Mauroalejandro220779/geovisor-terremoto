@@ -22,11 +22,13 @@
 <link rel="stylesheet" href="styles.css">
 <style>
   *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;height:100%;}
+  html,body{margin:0;padding:0;}
   body{
     font-family:'IBM Plex Sans',sans-serif;
     background:var(--paper);
     color:var(--ink);
+  }
+  .app-shell{
     display:flex;
     flex-direction:column;
     height:100vh;
@@ -223,6 +225,8 @@
 </head>
 <body>
 
+<div class="app-shell">
+
 <div class="banner">
   <span>⚠ <b>PROTOTIPO — no es fuente oficial.</b></span>
   <span>Coordenadas aproximadas, sin geocodificación verificada. Confirmar dirección e insumos vigentes con la entidad antes de desplazarse o donar.</span>
@@ -253,6 +257,36 @@
     <div class="legend-box" id="legendBox"></div>
   </div>
 </div>
+
+</div>
+
+<section id="donacion-economica" style="max-width:900px;margin:0 auto;padding:20px 16px;">
+  <h2 style="font-size:13px;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-soft);margin:0 0 4px;font-weight:600;">
+    Donación económica
+  </h2>
+  <p style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-soft);margin:0 0 14px;">
+    Canales sin punto físico — verifica el titular de la cuenta antes de
+    transferir. Ver términos de uso.
+  </p>
+  <div style="display:grid;gap:10px;">
+    <div style="border:1px solid var(--hairline);border-radius:3px;padding:11px 14px;background:var(--panel);">
+      <div style="font-size:13px;font-weight:600;margin-bottom:4px;">Banco de Alimentos de Bogotá</div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-soft);">bancodealimentos.org.co · Llave BRE-B 0091677852 · Campaña #JuntosContraElHambre</div>
+    </div>
+    <div style="border:1px solid var(--hairline);border-radius:3px;padding:11px 14px;background:var(--panel);">
+      <div style="font-size:13px;font-weight:600;margin-bottom:4px;">ABACO — Asociación de Bancos de Alimentos</div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-soft);">NIT 900326456-1 · Llave BRE-B 0090989753</div>
+    </div>
+    <div style="border:1px solid var(--hairline);border-radius:3px;padding:11px 14px;background:var(--panel);">
+      <div style="font-size:13px;font-weight:600;margin-bottom:4px;">Fundación Solidaridad por Colombia</div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-soft);">Cuenta Bancolombia 167-000109-63 · Bre-B @juntosxcolombia</div>
+    </div>
+    <div style="border:1px solid var(--hairline);border-radius:3px;padding:11px 14px;background:var(--panel);">
+      <div style="font-size:13px;font-weight:600;margin-bottom:4px;">Progresa Chocó — Fundación Bancolombia</div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-soft);">Cuenta ahorros Bancolombia 24542391932 · Verifica el titular antes de donar</div>
+    </div>
+  </div>
+</section>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
@@ -302,7 +336,7 @@ const POINTS = [
   {name:"Plaza Imperial", dept:"Bogotá D.C.", addr:"Cra 104 #148-07, Bogotá", lat:4.7439, lng:-74.0762, cats:FENALCO_CATS, source:FENALCO_SOURCE, sourceUrl:FENALCO_SOURCE_URL, updated:"13 ago 2026", note:FENALCO_NOTE},
   {name:"Galerías", dept:"Bogotá D.C.", addr:"Cl 53 #26-60, Bogotá", lat:4.6431, lng:-74.0736, cats:FENALCO_CATS, source:FENALCO_SOURCE, sourceUrl:FENALCO_SOURCE_URL, updated:"13 ago 2026", note:FENALCO_NOTE},
   {name:"Paseo Villa del Río", dept:"Bogotá D.C.", addr:"Diag 57C Sur #62-60, Bogotá", lat:4.5809, lng:-74.1541, cats:FENALCO_CATS, source:FENALCO_SOURCE, sourceUrl:FENALCO_SOURCE_URL, updated:"13 ago 2026", note:FENALCO_NOTE},
-  {name:"Multiplaza — Medicamentos para Chocó (Global Shapers/GIZ)", dept:"Bogotá D.C.", addr:"Cl 19A #72-57, Av. Boyacá, Multiplaza Sótano 2, Bogotá", lat:4.6706, lng:-74.1379, cats:["medico"], source:"Global Shapers Community Colombia y Venezuela / GIZ H2 (historia de WhatsApp), 14 ago 2026", sourceUrl:"", updated:"14 ago 2026", note:"Solo medicamentos e insumos médicos, según Resolución 1403 de 2007 (Invima) — no donar vencidos ni que requieran fórmula médica. Todos los días 2pm-8pm. Destino: Chocó. Contacto en sitio: Anna Ferreira, 317 153 2794. Parte de la campaña 'No pares de donar' de Global Shapers Bogotá. Donación económica: llave Bancolombia @gsbogotahub, Asociación Global Shapers Bogotá, NIT 901260959-7."},
+  {name:"Multiplaza — Medicamentos para Chocó (Global Shapers/GIZ)", dept:"Bogotá D.C.", addr:"Cl 19A #72-57, Av. Boyacá, Multiplaza Sótano 2, Bogotá", lat:4.6706, lng:-74.1379, cats:["medico"], source:"Global Shapers Community Colombia y Venezuela / GIZ H2 (historia de WhatsApp), 14 ago 2026", sourceUrl:"", updated:"14 ago 2026", note:"ACTUALIZADO 16 ago — lista de prioridades específica de Global Shapers: Medicamentos por condición: hipertensión (Losartán, Amlodipino, Enalapril), diabetes (Metformina), respiratorios (Salbutamol, Beclometasona), cardiovasculares (Aspirina, Clopidogrel), tiroides (Levotiroxina), diuréticos (Furosemida, Espironolactona), dolor/fiebre (Acetaminofén). Solo sellados, vigentes, en empaque original. Insumos para curaciones: gasas estériles, vendas, apósitos, esparadrapo/micropore, guantes desechables, solución salina y antisépticos. NO RECIBEN: ropa (en este momento), jeringas, agujas, ni medicamentos controlados ni vencidos/abiertos/sin empaque. Todos los días 2pm-8pm. Contacto en sitio: Anna Ferreira, 317 153 2794. Donación económica: llave Bancolombia @gsbogotahub, NIT 901260959-7. Destino: Chocó."},
   {name:"Human Construction — SOS Chocó", dept:"Bogotá D.C.", addr:"Cra 52A #134D-23 Local 1, Bogotá (coordenadas aproximadas)", lat:4.7280, lng:-74.0620, cats:["agua_alimentos","aseo","ninos","abrigo","rescate","medico"], phone:"301 644 1221 (Hillary Angulo)", source:"Campaña SOS Chocó / #JuntosPorElChocó, 14 ago 2026", sourceUrl:"", updated:"14 ago 2026", note:"Horario: 8am-6pm. Donación económica: Corporación Pueblo Negro Fuerte, Davivienda cuenta de ahorros 0550108900866626, NIT 9018895915."},
   {name:"Fundación Catalina Muñoz — SOS Chocó", dept:"Bogotá D.C.", addr:"Diagonal 48 #19-16, Bogotá (coordenadas aproximadas)", lat:4.6280, lng:-74.0700, cats:["agua_alimentos","aseo","ninos","abrigo","rescate","medico"], phone:"300 261 8537 (Logística)", source:"Campaña SOS Chocó / #JuntosPorElChocó, 14 ago 2026", sourceUrl:"", updated:"14 ago 2026", note:"Horario: 8am-6pm. Donación económica: Corporación Pueblo Negro Fuerte, Davivienda cuenta de ahorros 0550108900866626, NIT 9018895915."},
   {name:"Casa Jardín Origen — SOS Chocó", dept:"Bogotá D.C.", addr:"Cl 38 #29-29, Teusaquillo, Bogotá", lat:4.6335, lng:-74.0759, cats:["agua_alimentos","aseo","ninos","abrigo","rescate","medico"], phone:"305 895 4149 (Logística)", source:"Campaña SOS Chocó / #JuntosPorElChocó — confirmado por El Colombiano y Revista Diners, 14 ago 2026", sourceUrl:"", updated:"14 ago 2026", note:"Horario: 8am-6pm. Donación económica: Corporación Pueblo Negro Fuerte, Davivienda cuenta de ahorros 0550108900866626, NIT 9018895915."},
@@ -349,7 +383,9 @@ const POINTS = [
   {name:"Cruz Roja Colombiana — Seccional Santander", dept:"Santander", addr:"Cl 45 #9B-10, Centro, Bucaramanga", lat:7.1197, lng:-73.1227, cats:[], catsUnknown:true, source:"Cruz Roja Colombiana (@cruzrojacol, Instagram oficial), 13 ago 2026", sourceUrl:"", updated:"14 ago 2026", note:"Insumos específicos sin confirmar — llamar antes de ir."},
   {name:"Cruz Roja Colombiana — Unidad Municipal Barrancabermeja", dept:"Santander", addr:"Cl 48 #22-141, Barrancabermeja", lat:7.0653, lng:-73.8547, cats:[], catsUnknown:true, source:"Cruz Roja Colombiana (@cruzrojacol, Instagram oficial), 13 ago 2026", sourceUrl:"", updated:"14 ago 2026", note:"Insumos específicos sin confirmar — llamar antes de ir."},
   {name:"Neomundo — Bucaramanga", dept:"Santander", addr:"Cl 89 Tv Oriental Metropolitana #69, Barrio Tejar, Bucaramanga", lat:7.1350, lng:-73.1100, cats:[], catsUnknown:true, source:"Cruz Roja Colombiana (@cruzrojacol, Instagram oficial), 13 ago 2026", sourceUrl:"", updated:"14 ago 2026", note:"Insumos específicos sin confirmar — llamar antes de ir."},
-  {name:"Centro Comercial La Florida — Floridablanca", dept:"Santander", addr:"Cl 31 #26A-19, Cañaveral, Floridablanca", lat:7.0730, lng:-73.0870, cats:[], catsUnknown:true, source:"Cruz Roja Colombiana (@cruzrojacol, Instagram oficial), 13 ago 2026", sourceUrl:"", updated:"14 ago 2026", note:"Insumos específicos sin confirmar — llamar antes de ir."}
+  {name:"Centro Comercial La Florida — Floridablanca", dept:"Santander", addr:"Cl 31 #26A-19, Cañaveral, Floridablanca", lat:7.0730, lng:-73.0870, cats:[], catsUnknown:true, source:"Cruz Roja Colombiana (@cruzrojacol, Instagram oficial), 13 ago 2026", sourceUrl:"", updated:"14 ago 2026", note:"Insumos específicos sin confirmar — llamar antes de ir."},
+  {name:"Fuerza Valle del Cauca — Punto Principal", dept:"Valle del Cauca", addr:"Cra 2B #38-14, Centro Comercial La Estación, Cali", lat:3.4550, lng:-76.5280, cats:["agua_alimentos","aseo","abrigo"], phone:"061 99 65 70 95 (Kateryn Carrillo)", source:"Fuerza Valle del Cauca (volante de WhatsApp), 16 ago 2026 — organización no verificada independientemente; el foco geográfico que declaran (Roldanillo, La Cumbre, Dagua, Golondrina) sí está confirmado como zona rural gravemente afectada.", sourceUrl:"", updated:"16 ago 2026", note:"Enfocados en zonas rurales del centro y norte del Valle no cubiertas por los canales grandes. Donación internacional: paypal.me/KaterinSOSColombia, Revolut, llave @kateryn468."},
+  {name:"Fuerza Valle del Cauca — Punto Secundario", dept:"Valle del Cauca", addr:"Cra 5B #2-80, San Antonio, Cali", lat:3.4470, lng:-76.5390, cats:["agua_alimentos","aseo","abrigo"], phone:"061 99 65 70 95 (Kateryn Carrillo)", source:"Fuerza Valle del Cauca (volante de WhatsApp), 16 ago 2026 — organización no verificada independientemente.", sourceUrl:"", updated:"16 ago 2026", note:"Enfocados en zonas rurales del centro y norte del Valle no cubiertas por los canales grandes. Donación internacional: paypal.me/KaterinSOSColombia, Revolut, llave @kateryn468."}
 ];
 
 document.querySelector('.sub').textContent =
