@@ -6,7 +6,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell -NoProfile -ExecutionPolicy Bypass -File \"C:\\Users\\LENOVO\\PROYECTOS\\geovisor-terremoto\\.claude\\hooks\\check-timestamp.ps1\"",
+            "command": "sh .claude/hooks/check-timestamp.sh",
+            "shell": "bash",
             "statusMessage": "Verificando SITE_LAST_UPDATED en index.html..."
           }
         ]
