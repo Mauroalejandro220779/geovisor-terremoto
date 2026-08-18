@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -NoProfile -ExecutionPolicy Bypass -File \"C:\\Users\\LENOVO\\PROYECTOS\\geovisor-terremoto\\.claude\\hooks\\check-timestamp.ps1\"",
+            "statusMessage": "Verificando SITE_LAST_UPDATED en index.html..."
+          }
+        ]
+      }
+    ]
+  }
+}
